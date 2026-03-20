@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build backend image
+        run: docker build -t contract-ai-backend:${{ github.ref_name }} backend/
+
+      - name: Build frontend image
+        run: docker build -t contract-ai-frontend:${{ github.ref_name }} frontend/
+
+      # Push to container registry (configure per platform)
+      # - name: Push images
+      #   run: |
+      #     docker tag contract-ai-backend:${{ github.ref_name }} $REGISTRY/contract-ai-backend:${{ github.ref_name }}
+      #     docker push $REGISTRY/contract-ai-backend:${{ github.ref_name }}
