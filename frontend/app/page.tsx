@@ -37,7 +37,7 @@ export default function LandingPage() {
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
             <span className="text-gradient">Kiểm Tra Hợp Đồng</span>
             <br />
-            <span className="text-foreground">Bằng Trí Tuệ Nhân Tạo</span>
+            <span className="text-foreground">Bằng AI</span>
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Phân tích rủi ro pháp lý, kiểm tra tuân thủ luật Việt Nam và đề xuất chỉnh sửa — chỉ trong vài giây.
