@@ -13,10 +13,10 @@ export function MissingClausesBanner({ review }: MissingClausesBannerProps) {
   if (missing_mandatory_clauses.length === 0) return null;
 
   return (
-    <div className="rounded-lg border border-orange-200 bg-orange-50 px-4 py-3 flex gap-3 items-start">
-      <AlertTriangle className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" aria-hidden="true" />
+    <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 flex gap-3 items-start">
+      <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" aria-hidden="true" />
       <div className="space-y-2 min-w-0">
-        <p className="text-sm font-semibold text-orange-800">
+        <p className="text-sm font-semibold text-amber-400">
           Thiếu {missing_mandatory_clauses.length} điều khoản bắt buộc
         </p>
         <div className="flex flex-wrap gap-1.5">
@@ -24,7 +24,7 @@ export function MissingClausesBanner({ review }: MissingClausesBannerProps) {
             <Badge
               key={clause}
               variant="outline"
-              className="text-xs bg-white border-orange-300 text-orange-700 font-medium"
+              className="text-xs bg-amber-500/20 border-amber-500/30 text-amber-300 font-medium"
             >
               {clause}
             </Badge>

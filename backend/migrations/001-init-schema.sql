@@ -1,6 +1,7 @@
--- Initial schema: laws_raw, law_changelog, ai_config
+-- Initial schema: laws_raw, law_changelog, ai_config, law_chunks (pgvector)
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE EXTENSION IF NOT EXISTS vector;
 
 CREATE TABLE IF NOT EXISTS laws_raw (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -47,3 +48,20 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_config_single_active ON ai_config(is_ac
 INSERT INTO ai_config (llm_model, llm_api_key, is_active)
 VALUES ('claude-sonnet-4-6', '', TRUE)
 ON CONFLICT (is_active) WHERE is_active = TRUE DO NOTHING;
+
+-- Vector storage for Vietnamese law embeddings (replaces Qdrant)
+CREATE TABLE IF NOT EXISTS law_chunks (
+    id              SERIAL PRIMARY KEY,
+    chunk_id        VARCHAR NOT NULL UNIQUE,
+    law_number      VARCHAR NOT NULL,
+    law_name        VARCHAR NOT NULL,
+    article         VARCHAR,
+    clause          VARCHAR,
+    text            TEXT NOT NULL,
+    applies_to      TEXT[],
+    is_active       BOOLEAN DEFAULT TRUE,
+    embedding       vector(1536)
+);
+
+CREATE INDEX IF NOT EXISTS idx_law_chunks_law_number ON law_chunks(law_number);
+CREATE INDEX IF NOT EXISTS idx_law_chunks_embedding ON law_chunks USING hnsw (embedding vector_cosine_ops);

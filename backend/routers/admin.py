@@ -71,9 +71,9 @@ async def admin_stats(request: Request):
         ai_row = result.fetchone()
         current_model = ai_row.llm_model if ai_row else "Not configured"
 
-    # Qdrant chunks
-    qdrant_svc = request.app.state.qdrant_service
-    collection_info = await qdrant_svc.get_collection_info()
+    # Vector chunk count (pgvector)
+    vector_svc = request.app.state.vector_service
+    collection_info = await vector_svc.get_collection_info()
     total_chunks = collection_info.get("points_count", 0)
 
     return {
@@ -109,7 +109,7 @@ async def init_crawl(background_tasks: BackgroundTasks, request: Request):
                 result = await run_initial_crawl(
                     seed_laws=SEED_LAWS,
                     db_session=db,
-                    qdrant_service=request.app.state.qdrant_service,
+                    vector_service=request.app.state.vector_service,
                     embedding_service=EmbeddingService(),
                 )
             _crawl_status = {
@@ -187,8 +187,8 @@ async def list_laws():
 
 
 @router.patch("/laws/{law_id}", dependencies=[Depends(verify_session)])
-async def toggle_law_active(law_id: UUID, request: Request):
-    """Toggle a law's active status in Qdrant."""
+async def toggle_law_active(law_id: UUID):
+    """Toggle a law's active status in law_chunks (pgvector)."""
     async with async_session() as db:
         result = await db.execute(
             text("SELECT law_number FROM laws_raw WHERE id = :id"),
@@ -198,9 +198,13 @@ async def toggle_law_active(law_id: UUID, request: Request):
         if not row:
             raise HTTPException(status_code=404, detail="Law not found")
 
-    # Toggle is_active in Qdrant for all chunks of this law
-    qdrant_svc = request.app.state.qdrant_service
-    # Note: Qdrant bulk update would be implemented here
+        # Toggle is_active for all chunks of this law
+        await db.execute(
+            text("UPDATE law_chunks SET is_active = NOT is_active WHERE law_number = :ln"),
+            {"ln": row.law_number},
+        )
+        await db.commit()
+
     return {"status": "ok", "law_number": row.law_number}
 
 

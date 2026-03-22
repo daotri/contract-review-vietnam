@@ -46,10 +46,10 @@ async def review_endpoint(request: Request, file: UploadFile):
             detail="Chỉ chấp nhận file PDF hoặc DOCX.",
         )
 
-    qdrant_svc = request.app.state.qdrant_service
+    vector_svc = request.app.state.vector_service
 
     try:
-        result = await review_contract(file, qdrant_svc)
+        result = await review_contract(file, vector_svc)
         return result
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc))
@@ -74,7 +74,7 @@ async def chat_endpoint(request: Request, body: ChatRequest):
     if not body.question.strip():
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="question is required.")
 
-    qdrant_svc = request.app.state.qdrant_service
+    vector_svc = request.app.state.vector_service
     embedder = EmbeddingService()
 
     # Embed question and search related laws
@@ -82,14 +82,14 @@ async def chat_endpoint(request: Request, body: ChatRequest):
     references: list[str] = []
     try:
         vector = await embedder.embed_single(body.question)
-        related_laws = await qdrant_svc.search(vector, limit=5)
+        related_laws = await vector_svc.search(vector, limit=5)
         references = [
             f"{r.get('law_number', '')} {r.get('article', '')} — {r.get('law_name', '')}".strip()
             for r in related_laws
             if r.get("law_number")
         ]
     except Exception as exc:
-        logger.warning("Qdrant search failed for chat: %s", exc)
+        logger.warning("Vector search failed for chat: %s", exc)
 
     messages = build_chat_prompt(
         contract_text=body.contract_text,

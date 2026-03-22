@@ -29,10 +29,10 @@ function getVerdict(score: number): VerdictConfig {
       icon: '🟢',
       label: 'CÓ THỂ KÝ',
       subLabel: 'Hợp đồng đạt yêu cầu cơ bản',
-      bg: 'bg-green-50',
-      text: 'text-green-800',
+      bg: 'bg-green-500/10',
+      text: 'text-green-400',
       barColor: 'bg-green-500',
-      border: 'border-green-200',
+      border: 'border-green-500/30',
     };
   }
   if (score >= 40) {
@@ -40,20 +40,20 @@ function getVerdict(score: number): VerdictConfig {
       icon: '🟡',
       label: 'CẦN XEM XÉT',
       subLabel: 'Cần chỉnh sửa trước khi ký',
-      bg: 'bg-yellow-50',
-      text: 'text-yellow-800',
+      bg: 'bg-yellow-500/10',
+      text: 'text-yellow-400',
       barColor: 'bg-yellow-500',
-      border: 'border-yellow-200',
+      border: 'border-yellow-500/30',
     };
   }
   return {
     icon: '🔴',
     label: 'KHÔNG NÊN KÝ',
     subLabel: 'Cần chỉnh sửa nhiều vấn đề nghiêm trọng',
-    bg: 'bg-red-50',
-    text: 'text-red-800',
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
     barColor: 'bg-red-500',
-    border: 'border-red-200',
+    border: 'border-red-500/30',
   };
 }
 
@@ -63,19 +63,19 @@ export function VerdictBanner({ review }: VerdictBannerProps) {
   const { critical, high, medium, low } = review.risk_summary;
 
   return (
-    <div className={`rounded-xl border p-5 space-y-3 ${verdict.bg} ${verdict.border}`}>
+    <div className={`rounded-xl border p-6 space-y-4 ${verdict.bg} ${verdict.border}`}>
       {/* Verdict heading */}
-      <div className="flex items-center gap-2">
-        <span className="text-2xl" aria-hidden="true">{verdict.icon}</span>
+      <div className="flex items-center gap-3">
+        <span className="text-3xl" aria-hidden="true">{verdict.icon}</span>
         <div>
-          <p className={`text-lg font-bold leading-tight ${verdict.text}`}>{verdict.label}</p>
-          <p className={`text-sm font-medium ${verdict.text} opacity-80`}>{verdict.subLabel}</p>
+          <p className={`text-xl font-bold leading-tight ${verdict.text}`}>{verdict.label}</p>
+          <p className={`text-base font-medium ${verdict.text} opacity-80`}>{verdict.subLabel}</p>
         </div>
       </div>
 
       {/* Overall assessment */}
       {review.overall_assessment && (
-        <p className={`text-sm leading-relaxed ${verdict.text} opacity-90`}>
+        <p className={`text-base leading-relaxed ${verdict.text} opacity-90`}>
           {review.overall_assessment}
         </p>
       )}
@@ -86,7 +86,7 @@ export function VerdictBanner({ review }: VerdictBannerProps) {
           <span className={`text-xs font-medium ${verdict.text} opacity-70`}>Điểm rủi ro</span>
           <span className={`text-sm font-bold ${verdict.text}`}>{score}/100 điểm</span>
         </div>
-        <div className="w-full bg-white/60 rounded-full h-2.5 overflow-hidden">
+        <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden">
           <div
             className={`h-full rounded-full transition-all ${verdict.barColor}`}
             style={{ width: `${score}%` }}
@@ -99,7 +99,7 @@ export function VerdictBanner({ review }: VerdictBannerProps) {
       </div>
 
       {/* Risk counts inline */}
-      <div className={`flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium ${verdict.text} opacity-80`}>
+      <div className={`flex flex-wrap gap-x-4 gap-y-1 text-sm font-medium ${verdict.text} opacity-80`}>
         {critical > 0 && <span>{critical} nghiêm trọng</span>}
         {high > 0 && <span>{high} cao</span>}
         {medium > 0 && <span>{medium} trung bình</span>}

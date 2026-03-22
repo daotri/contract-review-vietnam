@@ -22,7 +22,7 @@ export default function AdminDashboardPage() {
   return (
     <div className="space-y-6 max-w-4xl">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Tổng quan hệ thống</h1>
+        <h1 className="text-2xl font-bold text-foreground">Tổng quan hệ thống</h1>
         <p className="text-sm text-muted-foreground mt-1">Trạng thái hệ thống Contract AI</p>
       </div>
 
@@ -62,10 +62,10 @@ export default function AdminDashboardPage() {
       )}
 
       <div className="flex gap-3 pt-2">
-        <Button asChild>
+        <Button asChild className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90">
           <Link href="/admin/init">Thu thập ban đầu</Link>
         </Button>
-        <Button variant="outline" asChild>
+        <Button variant="outline" asChild className="border-border hover:bg-white/5">
           <Link href="/admin/crawl">Thêm luật mới</Link>
         </Button>
       </div>

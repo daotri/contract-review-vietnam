@@ -66,8 +66,8 @@ export function UploadForm({ onSubmit, loading }: UploadFormProps) {
         onDrop={onDrop}
         onClick={() => !file && inputRef.current?.click()}
         className={[
-          'border-2 border-dashed rounded-xl p-10 text-center transition-colors cursor-pointer',
-          dragging ? 'border-primary bg-primary/5' : 'border-muted-foreground/30 hover:border-primary/60',
+          'glass-card border-2 border-dashed rounded-xl p-10 text-center transition-all cursor-pointer',
+          dragging ? 'border-purple-500/50 bg-purple-500/5 glow-hover' : 'border-white/20 hover:border-purple-500/50',
           file ? 'cursor-default' : '',
         ].join(' ')}
       >
@@ -107,7 +107,7 @@ export function UploadForm({ onSubmit, loading }: UploadFormProps) {
       <Button
         onClick={handleSubmit}
         disabled={!file || loading}
-        className="w-full"
+        className="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600 disabled:opacity-50"
         size="lg"
       >
         {loading ? (

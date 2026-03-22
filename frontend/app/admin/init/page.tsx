@@ -76,7 +76,7 @@ export default function InitCrawlPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Thu thập ban đầu</h1>
+        <h1 className="text-2xl font-bold text-foreground">Thu thập ban đầu</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Thu thập toàn bộ văn bản luật từ nguồn và lập chỉ mục vào cơ sở dữ liệu.
         </p>
@@ -132,9 +132,9 @@ function ProgressRow({
           {current}/{total} ({pct}%)
         </span>
       </div>
-      <div className="h-2 bg-neutral-200 rounded-full overflow-hidden">
+      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
         <div
-          className="h-full bg-blue-500 rounded-full transition-all duration-500"
+          className="h-full bg-purple-500 rounded-full transition-all duration-500"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -144,10 +144,10 @@ function ProgressRow({
 
 function StatusBadge({ status }: { status: CrawlProgress['status'] }) {
   const map: Record<CrawlProgress['status'], { label: string; cls: string }> = {
-    idle: { label: 'Chờ', cls: 'bg-neutral-100 text-neutral-600' },
-    running: { label: 'Đang chạy', cls: 'bg-blue-100 text-blue-700' },
-    done: { label: 'Hoàn thành', cls: 'bg-green-100 text-green-700' },
-    error: { label: 'Lỗi', cls: 'bg-red-100 text-red-700' },
+    idle: { label: 'Chờ', cls: 'bg-white/10 text-muted-foreground' },
+    running: { label: 'Đang chạy', cls: 'bg-blue-500/20 text-blue-400' },
+    done: { label: 'Hoàn thành', cls: 'bg-green-500/20 text-green-400' },
+    error: { label: 'Lỗi', cls: 'bg-red-500/20 text-red-400' },
   };
   const { label, cls } = map[status];
   return (

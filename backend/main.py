@@ -4,7 +4,6 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from qdrant_client import AsyncQdrantClient
 from sqlalchemy import text
 
 from config import settings
@@ -14,33 +13,24 @@ from middleware.rate_limiter import RateLimiterMiddleware
 from middleware.security_headers import SecurityHeadersMiddleware
 from routers.admin import router as admin_router
 from routers.public import router as public_router
-from services.qdrant_service import QdrantService
+from services.vector_service import VectorService
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Initialize DB pool and Qdrant client on startup, cleanup on shutdown."""
+    """Initialize DB pool and VectorService on startup, cleanup on shutdown."""
     # Verify database connection
     async with engine.begin() as conn:
         await conn.execute(text("SELECT 1"))
 
-    # Initialize Qdrant client
-    app.state.qdrant = AsyncQdrantClient(
-        url=settings.qdrant_url,
-        api_key=settings.qdrant_api_key or None,
-        prefer_grpc=True,
-        grpc_port=settings.qdrant_grpc_port,
-    )
-
-    # Initialize Qdrant collection for Vietnamese law embeddings
-    qdrant_svc = QdrantService(app.state.qdrant)
-    await qdrant_svc.init_collection()
-    app.state.qdrant_service = qdrant_svc
+    # Initialize VectorService (pgvector — table managed by migration)
+    vector_svc = VectorService()
+    await vector_svc.init_collection()
+    app.state.vector_service = vector_svc
 
     yield
 
     # Cleanup
-    await app.state.qdrant.close()
     await engine.dispose()
 
 
@@ -70,9 +60,8 @@ app.include_router(admin_router)
 
 @app.get("/health")
 async def health_check():
-    """Health check — verify DB and Qdrant connectivity."""
+    """Health check — verify DB connectivity."""
     db_ok = False
-    qdrant_ok = False
 
     try:
         async with engine.begin() as conn:
@@ -81,10 +70,4 @@ async def health_check():
     except Exception:
         pass
 
-    try:
-        await app.state.qdrant.get_collections()
-        qdrant_ok = True
-    except Exception:
-        pass
-
-    return {"status": "ok" if (db_ok and qdrant_ok) else "degraded", "db": db_ok, "qdrant": qdrant_ok}
+    return {"status": "ok" if db_ok else "degraded", "db": db_ok}

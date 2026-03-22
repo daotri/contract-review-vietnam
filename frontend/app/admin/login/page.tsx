@@ -34,10 +34,10 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-100">
-      <Card className="w-full max-w-sm shadow-md">
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <Card className="w-full max-w-sm glass-card shadow-xl">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl text-center">Đăng nhập quản trị</CardTitle>
+          <CardTitle className="text-xl text-center text-gradient">Đăng nhập quản trị</CardTitle>
           <p className="text-sm text-center text-muted-foreground">Contract AI — Admin Panel</p>
         </CardHeader>
         <CardContent>
@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
             {error && (
               <p className="text-sm text-destructive">{error}</p>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90" disabled={loading}>
               {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
             </Button>
           </form>

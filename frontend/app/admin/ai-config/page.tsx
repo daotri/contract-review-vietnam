@@ -86,7 +86,7 @@ export default function AiConfigPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Cấu hình AI</h1>
+        <h1 className="text-2xl font-bold text-foreground">Cấu hình AI</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Thiết lập mô hình ngôn ngữ dùng cho phân tích hợp đồng.
         </p>
@@ -123,7 +123,7 @@ export default function AiConfigPage() {
                 <button
                   type="button"
                   onClick={() => setShowKey((v) => !v)}
-                  className="absolute inset-y-0 right-2 flex items-center text-muted-foreground hover:text-neutral-700"
+                  className="absolute inset-y-0 right-2 flex items-center text-muted-foreground hover:text-foreground"
                   aria-label={showKey ? 'Ẩn API key' : 'Hiện API key'}
                 >
                   {showKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -148,10 +148,10 @@ export default function AiConfigPage() {
             </div>
 
             <div className="flex gap-3 pt-1">
-              <Button type="button" variant="outline" onClick={handleTest} disabled={testing}>
+              <Button type="button" variant="outline" onClick={handleTest} disabled={testing} className="border-border hover:bg-white/5">
                 {testing ? 'Đang kiểm tra...' : 'Kiểm tra kết nối'}
               </Button>
-              <Button type="submit" disabled={saving}>
+              <Button type="submit" disabled={saving} className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90">
                 {saving ? 'Đang lưu...' : 'Lưu cấu hình'}
               </Button>
             </div>
@@ -184,7 +184,7 @@ export default function AiConfigPage() {
       </Card>
 
       {config && (
-        <Card className="bg-neutral-50">
+        <Card className="bg-card/50">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Embedding (chỉ đọc)</CardTitle>
           </CardHeader>

@@ -25,9 +25,9 @@ export function AdminSidebar() {
   }
 
   return (
-    <aside className="w-56 min-h-screen bg-neutral-900 text-neutral-100 flex flex-col">
-      <div className="px-5 py-5 border-b border-neutral-700">
-        <p className="text-xs uppercase tracking-widest text-neutral-400 font-semibold">Quản trị</p>
+    <aside className="w-56 min-h-screen bg-card text-foreground flex flex-col border-r border-border">
+      <div className="px-5 py-5 border-b border-border">
+        <p className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">Quản trị</p>
         <p className="text-sm font-bold mt-0.5">Contract AI</p>
       </div>
 
@@ -41,8 +41,8 @@ export function AdminSidebar() {
               className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors',
                 active
-                  ? 'bg-neutral-700 text-white'
-                  : 'text-neutral-400 hover:bg-neutral-800 hover:text-neutral-100'
+                  ? 'bg-purple-600/20 text-purple-400'
+                  : 'text-muted-foreground hover:bg-white/5 hover:text-foreground'
               )}
             >
               <Icon className="h-4 w-4 shrink-0" />
@@ -55,7 +55,7 @@ export function AdminSidebar() {
       <div className="px-2 pb-5">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm font-medium text-neutral-400 hover:bg-neutral-800 hover:text-red-400 transition-colors"
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-red-400 transition-colors"
         >
           <LogOut className="h-4 w-4 shrink-0" />
           Đăng xuất

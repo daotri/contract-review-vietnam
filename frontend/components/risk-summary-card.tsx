@@ -3,10 +3,10 @@
 import type { RiskLevel } from '@/lib/types';
 
 const RISK_CONFIG: Record<RiskLevel, { label: string; bg: string; text: string; border: string }> = {
-  critical: { label: 'Nghiêm trọng', bg: 'bg-red-50',    text: 'text-red-700',    border: 'border-red-200' },
-  high:     { label: 'Cao',         bg: 'bg-orange-50',  text: 'text-orange-700', border: 'border-orange-200' },
-  medium:   { label: 'Trung bình',  bg: 'bg-yellow-50',  text: 'text-yellow-700', border: 'border-yellow-200' },
-  low:      { label: 'Thấp',        bg: 'bg-blue-50',    text: 'text-blue-700',   border: 'border-blue-200' },
+  critical: { label: 'Nghiêm trọng', bg: 'bg-red-500/10',    text: 'text-red-400',    border: 'border-red-500/30' },
+  high:     { label: 'Cao',          bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/30' },
+  medium:   { label: 'Trung bình',   bg: 'bg-yellow-500/10', text: 'text-yellow-400', border: 'border-yellow-500/30' },
+  low:      { label: 'Thấp',         bg: 'bg-blue-500/10',   text: 'text-blue-400',   border: 'border-blue-500/30' },
 };
 
 interface RiskSummaryCardProps {

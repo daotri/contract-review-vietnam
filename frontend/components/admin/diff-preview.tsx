@@ -6,9 +6,9 @@ import { Label } from '@/components/ui/label';
 import type { DiffItem } from '@/lib/admin-api-client';
 
 const CHANGE_STYLES: Record<string, { badge: string; border: string }> = {
-  new: { badge: 'bg-green-100 text-green-800', border: 'border-green-300' },
-  amended: { badge: 'bg-yellow-100 text-yellow-800', border: 'border-yellow-300' },
-  repealed: { badge: 'bg-red-100 text-red-800', border: 'border-red-300' },
+  new: { badge: 'bg-green-500/20 text-green-400', border: 'border-green-500/30' },
+  amended: { badge: 'bg-yellow-500/20 text-yellow-400', border: 'border-yellow-500/30' },
+  repealed: { badge: 'bg-red-500/20 text-red-400', border: 'border-red-500/30' },
 };
 
 const CHANGE_LABELS: Record<string, string> = {
@@ -37,12 +37,12 @@ export function DiffPreview({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-neutral-700">
+        <p className="text-sm font-medium text-foreground">
           {changes.length} thay đổi — đã chọn {selected.length}
         </p>
         <div className="flex gap-3 text-sm">
-          <button onClick={onSelectAll} className="text-blue-600 hover:underline">Chọn tất cả</button>
-          <button onClick={onClearAll} className="text-neutral-500 hover:underline">Bỏ chọn</button>
+          <button onClick={onSelectAll} className="text-purple-400 hover:underline">Chọn tất cả</button>
+          <button onClick={onClearAll} className="text-muted-foreground hover:underline">Bỏ chọn</button>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export function DiffPreview({
           const styles = CHANGE_STYLES[item.change_type] || CHANGE_STYLES.new;
           const isChecked = selected.includes(item.article_id);
           return (
-            <div key={item.article_id} className={`border rounded-lg p-3 space-y-2 ${styles.border} bg-white`}>
+            <div key={item.article_id} className={`border rounded-lg p-3 space-y-2 ${styles.border} bg-card`}>
               <div className="flex items-start gap-3">
                 <Checkbox
                   id={`art-${item.article_id}`}
@@ -70,23 +70,23 @@ export function DiffPreview({
               {item.change_type === 'amended' && (
                 <div className="ml-7 grid grid-cols-2 gap-2 text-xs">
                   {item.old_content && (
-                    <div className="bg-red-50 border border-red-200 rounded p-2">
-                      <p className="font-semibold text-red-700 mb-1">Cũ</p>
-                      <p className="text-neutral-700 line-clamp-4">{item.old_content}</p>
+                    <div className="bg-red-500/10 border border-red-500/20 rounded p-2">
+                      <p className="font-semibold text-red-400 mb-1">Cũ</p>
+                      <p className="text-muted-foreground line-clamp-4">{item.old_content}</p>
                     </div>
                   )}
                   {item.new_content && (
-                    <div className="bg-green-50 border border-green-200 rounded p-2">
-                      <p className="font-semibold text-green-700 mb-1">Mới</p>
-                      <p className="text-neutral-700 line-clamp-4">{item.new_content}</p>
+                    <div className="bg-green-500/10 border border-green-500/20 rounded p-2">
+                      <p className="font-semibold text-green-400 mb-1">Mới</p>
+                      <p className="text-muted-foreground line-clamp-4">{item.new_content}</p>
                     </div>
                   )}
                 </div>
               )}
 
               {item.change_type === 'new' && item.new_content && (
-                <div className="ml-7 text-xs bg-green-50 border border-green-200 rounded p-2">
-                  <p className="text-neutral-700 line-clamp-3">{item.new_content}</p>
+                <div className="ml-7 text-xs bg-green-500/10 border border-green-500/20 rounded p-2">
+                  <p className="text-muted-foreground line-clamp-3">{item.new_content}</p>
                 </div>
               )}
             </div>

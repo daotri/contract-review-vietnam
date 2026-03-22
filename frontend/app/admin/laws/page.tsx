@@ -37,7 +37,7 @@ export default function LawsPage() {
   return (
     <div className="space-y-5 max-w-5xl">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Quản lý văn bản luật</h1>
+        <h1 className="text-2xl font-bold text-foreground">Quản lý văn bản luật</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Bật/tắt các văn bản luật sử dụng trong quá trình kiểm tra hợp đồng.
         </p>
@@ -50,7 +50,7 @@ export default function LawsPage() {
         className="max-w-sm"
       />
 
-      <div className="rounded-md border bg-white">
+      <div className="rounded-md border border-border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
@@ -88,9 +88,9 @@ export default function LawsPage() {
                   <TableCell className="text-center">{law.priority}</TableCell>
                   <TableCell className="text-center">
                     {law.embedded ? (
-                      <span className="text-green-600 font-medium text-xs">Có</span>
+                      <span className="text-green-400 font-medium text-xs">Có</span>
                     ) : (
-                      <span className="text-neutral-400 text-xs">Chưa</span>
+                      <span className="text-muted-foreground text-xs">Chưa</span>
                     )}
                   </TableCell>
                   <TableCell className="text-center text-sm text-muted-foreground">

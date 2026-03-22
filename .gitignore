@@ -94,3 +94,8 @@ external/
 # Git worktrees (local development only)
 worktrees/
 cookies.txt
+
+# Tool configs (local only)
+.opencode/
+.repomixignore
+release-manifest.json

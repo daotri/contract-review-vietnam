@@ -1,4 +1,7 @@
-"""Main review orchestrator — parse → detect type → split → parallel analyze → aggregate."""
+"""Main review orchestrator — parse → detect type → split → parallel analyze → aggregate.
+
+Uses pgvector (VectorService) for semantic law search during clause analysis.
+"""
 
 import asyncio
 import json
@@ -13,7 +16,7 @@ from services.contract_type_detector import detect_contract_type
 from services.embedder import EmbeddingService
 from services.llm_service import llm_service
 from services.parser import parse_file
-from services.qdrant_service import QdrantService
+from services.vector_service import VectorService
 
 logger = logging.getLogger(__name__)
 
@@ -84,20 +87,20 @@ async def _analyze_clause(
     clause_index: int,
     clause: dict,
     contract_type: str,
-    qdrant_svc: QdrantService,
+    vector_svc: VectorService,
     embedder: EmbeddingService,
     semaphore: asyncio.Semaphore,
 ) -> ClauseAnalysis:
-    """Embed clause → search Qdrant → LLM analyze. Guarded by semaphore."""
+    """Embed clause → search pgvector → LLM analyze. Guarded by semaphore."""
     async with semaphore:
         clause_text = clause["text"]
         related_laws: list[dict] = []
 
         try:
             vector = await embedder.embed_single(clause_text[:1000])
-            related_laws = await qdrant_svc.search(vector, applies_to=contract_type, limit=5)
+            related_laws = await vector_svc.search(vector, applies_to=contract_type, limit=5)
         except Exception as exc:
-            logger.warning("Qdrant search failed for clause %d: %s", clause_index, exc)
+            logger.warning("Vector search failed for clause %d: %s", clause_index, exc)
 
         messages = [
             {"role": "system", "content": CLAUSE_ANALYSIS_SYSTEM},
@@ -169,7 +172,7 @@ def _detect_missing_clauses(contract_type: str, clause_texts: list[str]) -> list
 
 async def review_contract(
     file: UploadFile,
-    qdrant_svc: QdrantService,
+    vector_svc: VectorService,
 ) -> ContractReview:
     """Full review pipeline: parse → detect type → split → parallel analyze → aggregate."""
     # 1. Parse file (validates type + size internally)
@@ -194,7 +197,7 @@ async def review_contract(
     semaphore = asyncio.Semaphore(MAX_CONCURRENT)
 
     tasks = [
-        _analyze_clause(i, clause, contract_type, qdrant_svc, embedder, semaphore)
+        _analyze_clause(i, clause, contract_type, vector_svc, embedder, semaphore)
         for i, clause in enumerate(clauses)
     ]
     analyzed: list[ClauseAnalysis] = await asyncio.gather(*tasks)

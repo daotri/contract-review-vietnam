@@ -64,7 +64,7 @@ export default function CrawlPage() {
   return (
     <div className="space-y-6 max-w-3xl">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Thu thập luật mới</h1>
+        <h1 className="text-2xl font-bold text-foreground">Thu thập luật mới</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Nhập URL văn bản luật để xem trước thay đổi trước khi áp dụng.
         </p>

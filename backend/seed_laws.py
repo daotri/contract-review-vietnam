@@ -39,7 +39,7 @@ SEED_LAWS: list[dict] = [
     {
         "law_number": "145/2020/ND-CP",
         "law_name": "Nghị định 145/2020/NĐ-CP hướng dẫn Bộ luật Lao động",
-        "source_url": "https://thuvienphapluat.vn/van-ban/Lao-dong-Tien-luong/Nghi-dinh-145-2020-ND-CP-huong-dan-Bo-luat-Lao-dong-ve-dieu-kien-lao-dong-460128.aspx",
+        "source_url": "https://thuvienphapluat.vn/van-ban/Lao-dong-Tien-luong/Nghi-dinh-145-2020-ND-CP-huong-dan-Bo-luat-Lao-dong-ve-dieu-kien-lao-dong-quan-he-lao-dong-459400.aspx",
         "priority": 2,
         "applies_to": ["lao_dong"],
     },
@@ -53,14 +53,14 @@ SEED_LAWS: list[dict] = [
     {
         "law_number": "37/2015/ND-CP",
         "law_name": "Nghị định 37/2015/NĐ-CP về hợp đồng xây dựng",
-        "source_url": "https://thuvienphapluat.vn/van-ban/Xay-dung-Do-thi/Nghi-dinh-37-2015-ND-CP-hop-dong-xay-dung-271954.aspx",
+        "source_url": "https://thuvienphapluat.vn/van-ban/Xay-dung-Do-thi/Nghi-dinh-37-2015-ND-CP-hop-dong-xay-dung-272352.aspx",
         "priority": 2,
         "applies_to": ["xay_dung"],
     },
     {
         "law_number": "13/2023/ND-CP",
         "law_name": "Nghị định 13/2023/NĐ-CP bảo vệ dữ liệu cá nhân",
-        "source_url": "https://thuvienphapluat.vn/van-ban/Cong-nghe-thong-tin/Nghi-dinh-13-2023-ND-CP-bao-ve-du-lieu-ca-nhan-556614.aspx",
+        "source_url": "https://thuvienphapluat.vn/van-ban/Cong-nghe-thong-tin/Nghi-dinh-13-2023-ND-CP-bao-ve-du-lieu-ca-nhan-465185.aspx",
         "priority": 2,
         "applies_to": ["dich_vu", "cong_nghe"],
     },

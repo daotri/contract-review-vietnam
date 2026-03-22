@@ -7,21 +7,21 @@ export function ReviewSkeleton() {
     <div className="space-y-6 w-full">
       {/* Header */}
       <div className="flex gap-3">
-        <Skeleton className="h-7 w-32 rounded-full" />
-        <Skeleton className="h-7 w-24 rounded-full" />
+        <Skeleton className="h-7 w-32 rounded-full bg-white/5" />
+        <Skeleton className="h-7 w-24 rounded-full bg-white/5" />
       </div>
 
       {/* Risk summary bar */}
       <div className="grid grid-cols-5 gap-2">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="h-16 rounded-lg" />
+          <Skeleton key={i} className="h-16 rounded-lg bg-white/5" />
         ))}
       </div>
 
       {/* Clause cards */}
       <div className="space-y-2">
         {Array.from({ length: 6 }).map((_, i) => (
-          <Skeleton key={i} className="h-12 rounded-lg" />
+          <Skeleton key={i} className="h-12 rounded-lg bg-white/5" />
         ))}
       </div>
     </div>

@@ -9,11 +9,6 @@ class Settings(BaseSettings):
     # Database
     database_url: str = "postgresql+asyncpg://contract_ai:local_dev_password@postgres:5432/contract_ai"
 
-    # Qdrant
-    qdrant_url: str = "http://qdrant:6333"
-    qdrant_grpc_port: int = 6334
-    qdrant_api_key: str = ""
-
     # Embedding (fixed — do not change after init)
     embed_model: str = "text-embedding-3-small"
     embed_dimension: int = 1536

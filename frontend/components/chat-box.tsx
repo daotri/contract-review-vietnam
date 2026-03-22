@@ -42,7 +42,7 @@ export function ChatBox({ review }: ChatBoxProps) {
       {/* Floating toggle button */}
       <button
         onClick={() => setOpen(v => !v)}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-medium text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-purple-600 hover:bg-purple-700 px-4 py-3 text-sm font-medium text-white shadow-lg shadow-purple-900/40 transition-colors"
         aria-label="Hỏi đáp về hợp đồng"
       >
         <MessageCircle className="w-4 h-4" aria-hidden="true" />
@@ -60,7 +60,7 @@ export function ChatBox({ review }: ChatBoxProps) {
           />
 
           {/* Panel */}
-          <div className="relative z-10 flex flex-col w-full max-w-sm h-full bg-background shadow-2xl border-l">
+          <div className="relative z-10 flex flex-col w-full max-w-sm h-full bg-card shadow-2xl border-l border-border">
             {/* Header */}
             <div className="px-4 py-3 border-b bg-muted/30 flex items-center justify-between">
               <div>
@@ -88,7 +88,7 @@ export function ChatBox({ review }: ChatBoxProps) {
                     {msg.role === 'assistant' && <Bot className="w-5 h-5 text-primary shrink-0 mt-0.5" />}
                     <div className={[
                       'max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed',
-                      msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground',
+                      msg.role === 'user' ? 'bg-purple-600/20 text-foreground' : 'bg-white/5 text-foreground',
                     ].join(' ')}>
                       {msg.content}
                     </div>

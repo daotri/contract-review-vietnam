@@ -1,4 +1,4 @@
-"""Full crawl pipeline: crawl → store → chunk → embed → upsert Qdrant."""
+"""Full crawl pipeline: crawl → store → chunk → embed → upsert pgvector."""
 
 import logging
 import uuid
@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from services.chunker import chunk_law_text
 from services.crawler import crawl_with_rate_limit
 from services.embedder import EmbeddingService
-from services.qdrant_service import QdrantService
+from services.vector_service import VectorService
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 async def run_initial_crawl(
     seed_laws: list[dict],
     db_session: AsyncSession,
-    qdrant_service: QdrantService,
+    vector_service: VectorService,
     embedding_service: EmbeddingService,
 ) -> dict:
     """Run the full crawl pipeline for all seed laws.
@@ -102,8 +102,8 @@ async def run_initial_crawl(
             texts = [c["text"] for c in chunks]
             vectors = await embedding_service.embed_texts(texts)
 
-            # Step 4: Upsert to Qdrant
-            await qdrant_service.batch_upsert(chunks, vectors)
+            # Step 4: Upsert to pgvector
+            await vector_service.batch_upsert(chunks, vectors)
             summary["chunks_total"] += len(chunks)
 
             # Step 5: Mark as embedded

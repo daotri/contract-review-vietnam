@@ -6,10 +6,10 @@ import { ChevronDown, ChevronUp, Paperclip } from 'lucide-react';
 import type { ClauseAnalysis, RiskLevel } from '@/lib/types';
 
 const RISK_CONFIG: Record<RiskLevel, { badge: string; border: string; dot: string; label: string }> = {
-  critical: { badge: 'bg-red-100 text-red-700 border-red-200',    border: 'border-l-red-500',    dot: '🔴', label: 'Nghiêm trọng' },
-  high:     { badge: 'bg-orange-100 text-orange-700 border-orange-200', border: 'border-l-orange-500', dot: '🟠', label: 'Cao' },
-  medium:   { badge: 'bg-yellow-100 text-yellow-700 border-yellow-200', border: 'border-l-yellow-500', dot: '🟡', label: 'Trung bình' },
-  low:      { badge: 'bg-blue-100 text-blue-700 border-blue-200',   border: 'border-l-blue-500',   dot: '🔵', label: 'Thấp' },
+  critical: { badge: 'bg-red-500/10 text-red-400 border-red-500/30',       border: 'border-l-red-500',    dot: '🔴', label: 'Nghiêm trọng' },
+  high:     { badge: 'bg-orange-500/10 text-orange-400 border-orange-500/30', border: 'border-l-orange-500', dot: '🟠', label: 'Cao' },
+  medium:   { badge: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30', border: 'border-l-yellow-500', dot: '🟡', label: 'Trung bình' },
+  low:      { badge: 'bg-blue-500/10 text-blue-400 border-blue-500/30',     border: 'border-l-blue-500',   dot: '🔵', label: 'Thấp' },
 };
 
 interface ClauseCardProps {
@@ -29,15 +29,15 @@ export function ClauseCard({ clause }: ClauseCardProps) {
     <div className={`rounded-lg border border-l-4 ${cfg.border} bg-background overflow-hidden`}>
       {/* Header row */}
       <button
-        className="w-full px-4 py-3 flex items-center justify-between gap-3 hover:bg-muted/40 transition-colors text-left"
+        className="w-full px-5 py-4 flex items-center justify-between gap-3 hover:bg-muted/40 transition-colors text-left"
         onClick={() => setExpanded(v => !v)}
         aria-expanded={expanded}
       >
         <div className="flex items-center gap-2 min-w-0 overflow-hidden">
           <span aria-hidden="true">{cfg.dot}</span>
-          <span className="text-sm font-semibold whitespace-nowrap">{title}</span>
+          <span className="text-base font-semibold whitespace-nowrap">{title}</span>
           {issues[0] && (
-            <span className="text-xs text-muted-foreground truncate hidden sm:block">
+            <span className="text-sm text-muted-foreground truncate hidden sm:block">
               — {issues[0]}
             </span>
           )}
@@ -47,7 +47,7 @@ export function ClauseCard({ clause }: ClauseCardProps) {
             {cfg.label}
           </Badge>
           {compliant && (
-            <Badge variant="outline" className="text-xs border-green-200 bg-green-50 text-green-700 hidden sm:inline-flex">
+            <Badge variant="outline" className="text-xs border-green-500/30 bg-green-500/10 text-green-400 hidden sm:inline-flex">
               Ổn
             </Badge>
           )}
@@ -57,12 +57,12 @@ export function ClauseCard({ clause }: ClauseCardProps) {
 
       {/* Expanded content */}
       {expanded && (
-        <div className="px-4 pb-4 pt-2 border-t space-y-3">
+        <div className="px-5 pb-5 pt-3 border-t space-y-4">
           {/* Issues list */}
           {issues.length > 0 && (
             <ul className="space-y-1">
               {issues.map((issue, i) => (
-                <li key={i} className="text-sm flex gap-2">
+                <li key={i} className="text-base flex gap-2 leading-relaxed">
                   <span className="text-destructive mt-0.5 shrink-0">•</span>
                   <span>{issue}</span>
                 </li>
@@ -72,22 +72,22 @@ export function ClauseCard({ clause }: ClauseCardProps) {
 
           {/* Redline diff: clause_text → suggested_text */}
           {suggested_text && (
-            <div className="rounded-md bg-muted/50 p-3 space-y-1 text-xs font-mono leading-relaxed">
-              <p className="line-through text-red-600 whitespace-pre-wrap">{clause.clause_text}</p>
-              <p className="text-green-700 whitespace-pre-wrap">{suggested_text}</p>
+            <div className="rounded-md bg-green-500/10 border border-green-500/30 p-4 space-y-2 text-sm font-mono leading-relaxed">
+              <p className="line-through text-red-400 whitespace-pre-wrap">{clause.clause_text}</p>
+              <p className="text-green-400 whitespace-pre-wrap">{suggested_text}</p>
             </div>
           )}
 
           {/* Suggestion (prose) */}
           {suggestion && !suggested_text && (
-            <p className="text-sm text-muted-foreground">{suggestion}</p>
+            <p className="text-base text-muted-foreground leading-relaxed">{suggestion}</p>
           )}
 
           {/* Legal references inline */}
           {legal_references.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {legal_references.map((ref, i) => (
-                <span key={i} className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                <span key={i} className="inline-flex items-center gap-1 text-sm text-muted-foreground">
                   <Paperclip className="w-3 h-3" aria-hidden="true" />
                   {ref}
                 </span>
